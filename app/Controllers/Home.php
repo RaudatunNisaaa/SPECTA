@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 use App\Models\PesananModel;
+use APP\Models\MakananModel;
+use App\Models\AkunModel;
+use App\Models\PegawaiModel;
 
 class Home extends BaseController
 {
@@ -18,13 +21,59 @@ class Home extends BaseController
         $data['dibatalkan'] = count($dibatalkan);
 
         echo view('layout/menu');
-        return view('index', $data);
+        return view('admin/index', $data);
         echo view('layout/footer');
+    }
+
+    public function owner()
+    {
+        $makananModel = new MakananModel();
+        $makanan = $makananModel->findAll();
+        $data['makanan']=count($makanan);
+
+        $akunModel = new AkunModel();
+        $akun = $akunModel->findAll();
+        $data['akun']=count($akun);
+
+        $pesananModel = new PesananModel();
+        $pesanan = $pesananModel->findAll();
+        $data['pesanan']=count($pesanan);
+
+        $pegawaiModel = new PegawaiModel();
+        $pegawai = $pegawaiModel->findAll();
+        $data['pegawai']=count($pegawai);
+        
+        echo view('layout/sidebar');
+        return view('owner/index', $data);
+        echo view('layout/footer');
+    }
+
+    public function menu()
+    {
+        $makananModel = new MakananModel();
+        $makanan = $makananModel->findAll();
+        $data['makanan'] = count($makanan);
+
+        $pesananModel = new PesananModel();
+        $pesanan = $pesananModel->findAll();
+        // var_dump('aa');exit;
+        $data['pesanan'] = count($pesanan);
+
+        // var_dump($jumlahMakanan);exit;
+        echo view('temp/header');
+        echo view('temp/menu');
+        return view('index', $data);
+        echo view('temp/footer');
+    }
+
+    public function beranda()
+    {
+        return view('beranda');
     }
 
     public function login()
     {
-        return view('login');
+        return view('admin/login');
     }
 
     public function persetujuan()
@@ -34,7 +83,7 @@ class Home extends BaseController
         $data['tunggu'] = $tunggu;
         echo view('layout/header');
         echo view('layout/menu');
-        return view('persetujuan',$data);
+        return view('admin/persetujuan',$data);
         echo view('layout/footer');
     }
 
@@ -45,7 +94,7 @@ class Home extends BaseController
         $data['disetujui'] = $disetujui;
         echo view('layout/header');
         echo view('layout/menu');
-        return view('disetujui', $data);
+        return view('admin/disetujui', $data);
         echo view('layout/footer');
     }
 
@@ -56,7 +105,7 @@ class Home extends BaseController
         $data['selesai'] = $selesai;
         echo view('layout/header');
         echo view('layout/menu');
-        return view('selesai', $data);
+        return view('admin/selesai', $data);
         echo view('layout/footer');
     }
 
@@ -67,7 +116,7 @@ class Home extends BaseController
         $data['dibatalkan'] = $dibatalkan;
         echo view('layout/header');
         echo view('layout/menu');
-        return view('dibatalkan', $data);
+        return view('admin/dibatalkan', $data);
         echo view('layout/footer');
     }
 }

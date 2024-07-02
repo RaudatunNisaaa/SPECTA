@@ -21,7 +21,7 @@ class Makanan extends BaseController
         ];
         echo view('layout/header');
         echo view('layout/menu');
-        echo view('datamenu', $data);
+        echo view('admin/datamenu', $data);
         echo view('layout/footer');
     }
 
@@ -29,7 +29,7 @@ class Makanan extends BaseController
     {
         echo view('layout/header');
         echo view('layout/menu');
-        echo view('tambahmenu', ['id_jenis' => $id_jenis]);
+        echo view('admin/tambahmenu', ['id_jenis' => $id_jenis]);
         echo view('layout/footer');
     }
 

@@ -8,6 +8,8 @@ class PesananModel extends Model
     protected $table = 'pesanan';
     protected $primaryKey = 'id_pesanan';
     protected $allowedFields = ['id_makanan', 'jumlah', 'nama_pelanggan', 'phone', 'tglAmbil', 'alamat', 'status'];
+    protected $returnType = 'array';
+    protected $useTimestamps = false;
 
     // Method untuk mengambil data status
     public function getStatusCounts()

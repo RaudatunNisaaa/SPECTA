@@ -24,7 +24,7 @@ class Kategori extends BaseController
         ];
         echo view('layout/header');
         echo view('layout/menu');
-        echo view('datakategori', $data);
+        echo view('admin/datakategori', $data);
         echo view('layout/footer');
     }
 
@@ -32,7 +32,7 @@ class Kategori extends BaseController
     {
         echo view('layout/header');
         echo view('layout/menu');
-        echo view('tambahkategori');
+        echo view('admin/tambahkategori');
         echo view('layout/footer');
     }
 

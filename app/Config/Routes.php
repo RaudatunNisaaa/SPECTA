@@ -6,14 +6,29 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->get('/', 'Auth::login');
+$routes->get('/', 'Home::beranda');
+$routes->get('/login', 'Auth::login');
 
 $routes->get('/login', 'Home::login');
 $routes->post('/auth/proses_login', 'Auth::proses_login');
 $routes->post('/auth/proses_logout', 'Auth::proses_logout');
 
-$routes->get('/dashboard', 'Home::index');
+$routes->setTranslateURIDashes(true);
+$routes->setAutoRoute(true);
+$routes->get('/beranda', 'Home::beranda');
 
+$routes->get('/menu', 'Menu::index');
+$routes->post('/pesanan/checkout', 'Checkout::process');
+$routes->get('/menu/pesan/(:num)', 'Menu::pesan/$1');
+
+$routes->get('/dasboard', 'Home::owner');
+$routes->get('/akun', 'Akun::index');
+$routes->get('/pegawai', 'Pegawai::index');
+
+$routes->get('/akun/tambah', 'Akun::tambah');
+$routes->post('/akun/simpan', 'Akun::simpan');
+
+$routes->get('/dashboard', 'Home::index');
 $routes->get('/persetujuan', 'Home::persetujuan');
 $routes->get('/disetujui', 'Home::disetujui');
 $routes->get('/dibatalkan', 'Home::dibatalkan');

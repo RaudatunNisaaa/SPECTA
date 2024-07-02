@@ -8,7 +8,7 @@ class Auth extends BaseController
 {
     public function login()
     {
-        return view('login');
+        return view('admin/login');
     }
 
     public function proses_login()
@@ -23,9 +23,16 @@ class Auth extends BaseController
             session()->set([
                 'id_akun' => $akun['id_akun'],
                 'username' => $akun['username'],
+                'level' => $akun['level'],
                 'isLoggedIn' => true
             ]);
-            return redirect()->to('/dashboard');
+            if($akun['level'] == 'admin') {
+                return redirect()->to('/dashboard');
+            } elseif($akun['level'] == 'owner') {
+                return redirect()->to('/akun');
+            } else {
+                return redirect()->to('/login')->with('errors', collect(['password' => 'Level not recognized.'])->all());
+            }
         }else{
             return redirect()->to('/login')->with('errors', collect(['password' => 'Username or password is incorrect.'])->all());
         }
