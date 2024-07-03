@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MakananModel extends \CodeIgniter\Model
+class MakananModel extends Model
 {
     protected $table = 'makanan';
     protected $primaryKey = 'id_makanan';
@@ -12,11 +12,11 @@ class MakananModel extends \CodeIgniter\Model
 
     public function getMakanan($id_jenis = false)
     {
-        if ($id_jenis == false) {
+        if ($id_jenis === false) {
             return $this->findAll();
         }
 
-        return $this->where(['id_jenis' => $id_jenis])->findAll(); // Use findAll to get all matching records
+        return $this->where(['id_jenis' => $id_jenis])->findAll();
     }
 }
-
+?>

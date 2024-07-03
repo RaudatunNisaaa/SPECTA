@@ -38,53 +38,37 @@
     </ol>
 </div>
 
-<div class="container-fluid fruite py-5">
-    <div class="container py-5">
+<div class="container-fluid py-5">
+    <div class="container py-3">
         <div class="tab-class text-center">
-            <div class="row g-4">
-                <div class="col-lg-4 text-start">
-                    <h1>Menu</h1>
-                </div>
-            </div>
-            <div class="row g-4">
-                <!-- Menu Item 1 -->
-                <?php foreach ($menu as $item) : ?>
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="rounded position-relative fruite-item">
-                            <div class="fruite-img">
-                                <!-- <img src="<?= base_url('/assets/img/') . $item['foto']; ?>" class="img-fluid w-100 rounded-top" alt="<?= $item['makanan']; ?>"> -->
-                            </div>
-                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= $item['jenis_makanan']; ?></div>
-                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                <h4><?= $item['makanan']; ?></h4>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold mb-0">Rp.<?= number_format($item['harga'], 0, ',', '.'); ?>/box</p>
-                                    <a href="/menu/pesan/<?= $item['id_makanan']; ?>" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> pesan
-                                    </a>
+            <h1>Kategori Menu</h1>
+            <div class="row g-4 mt-4 justify-content-center">
+                <?php if (!empty($kategori) && is_array($kategori)): ?>
+                    <?php foreach ($kategori as $value) : ?>
+                        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+                            <div class="rounded position-relative">
+                                <div class="fruite-img">
+                                    <img src="/img/<?= esc($value['foto']); ?>" class="img-fluid w-100 rounded-top" alt="<?= esc($value['jenis_makanan']); ?>">
+                                </div>
+                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                    <h4 class="text-dark fs-5 fw-bold mb-0"><?= esc($value['jenis_makanan']); ?></h4>
+                                    <div class="d-flex justify-content-center flex-lg-wrap">
+                                        <a href="/detailmenu/<?= esc($value['id_jenis']); ?>" class="btn border border-secondary rounded-pill mt-3 px-3 text-primary">
+                                            <i class="fa fa-info-circle me-2 text-primary"></i> Detail
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12 text-center">
+                        <p>Kategori belum tersedia.</p>
                     </div>
-                <?php endforeach; ?>
-                <!-- Menu Item 2 -->
-
-                <script>
-                    // Fungsi untuk menambahkan item ke keranjang
-                    $('.add-to-cart').click(function() {
-                        // Ambil data nama dan harga dari atribut data
-                        var name = $(this).data('name');
-                        var price = $(this).data('price');
-
-                        // Kirim permintaan POST ke server
-                        $.post('/menu/tambahKeKeranjang', {
-                            nama: name,
-                            harga: price
-                        }, function(data) {
-                            // Tampilkan pesan atau lakukan sesuatu setelah item ditambahkan ke keranjang
-                            alert('Item ditambahkan ke keranjang!');
-                        });
-                    });
-                </script>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>

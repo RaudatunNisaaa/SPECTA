@@ -20,6 +20,8 @@ $routes->get('/beranda', 'Home::beranda');
 $routes->get('/menu', 'Menu::index');
 $routes->post('/pesanan/checkout', 'Checkout::process');
 $routes->get('/menu/pesan/(:num)', 'Menu::pesan/$1');
+$routes->get('/detailmenu/(:num)', 'Menu::detailmenu/$1');
+$routes->get('/history', 'History::index');
 
 $routes->get('/dasboard', 'Home::owner');
 $routes->get('/akun', 'Akun::index');

@@ -52,16 +52,9 @@
 </li>
 
 <li class="nav-item active">
-    <a class="nav-link" href="/jenis_makanan">
-        <i class="fas fa-fw fa-utensils"></i>
-        <span>Jenis Makanan</span>
-    </a>
-</li>
-
-<li class="nav-item active">
     <a class="nav-link" href="/pegawai">
         <i class="fas fa-fw fa-user"></i>
-        <span>Pegawai</span>
+        <span>Kelola Pegawai</span>
     </a>
 </li>
 
@@ -77,12 +70,13 @@
         <i class="fas fa-fw fa-hamburger"></i>
         <span>Makanan</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="/member/categories">Categories</a>
-        </div>
-    </div>
+
+<li class="nav-item active">
+    <a class="nav-link" href="/history">
+        <i class="fas fa-fw fa-history"></i>
+        <span>History</span>
+    </a>
+</li>
 </li>
 </ul>
 

@@ -177,7 +177,7 @@
 
 /*** Hero Header ***/
 .hero-header {
-    background: linear-gradient(rgba(12, 5, 233, 0.765), rgba(12, 5, 233, 0.765)), url(../img/background.png);
+    background: linear-gradient(rgba(5, 0, 148, 0.765), rgba(5, 0, 148, 0.765)), url(../img/background.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -218,10 +218,10 @@
 
 .page-header {
     position: relative;
-    background: linear-gradient(rgba(12, 5, 233, 0.765), rgba(12, 5, 233, 0.765)), url(../img/background.png);
+    background: linear-gradient(rgba(5, 0, 148, 0.765), rgba(5, 0, 148, 0.765)), url(../img/background.jpg);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 @media (min-width: 992px) {

@@ -3,26 +3,49 @@
 namespace App\Controllers;
 
 use App\Models\MenuModel;
+use App\Models\KategoriModel;
+use App\Models\MakananModel;
+
 
 class Menu extends BaseController
 {
     protected $menuModel;
+    
+    protected $kategoriModel;
+    protected $makananModel;
 
     public function __construct()
     {
         $this->menuModel = new MenuModel();
+        $this->kategoriModel = new KategoriModel();
+        $this->makananModel = new MakananModel();
+        // $this->historyModel = new HistoryModel();
     }
-    
+
     public function index()
     {
-        // Panggil data menu dari model
-        $data['menu'] = $this->menuModel->join('jenismakanan', 'jenismakanan.id_jenis=makanan.id_jenis')->findAll();
-        // var_dump($data);
-        // exit;
+        $dataKategori = $this->kategoriModel->findAll();
+        $data = [
+            'kategori' => $dataKategori
+        ];
+            
+        error_log(print_r($dataKategori, true));
 
-        // Panggil view menu dengan data
-        return view('menu', $data);
+        echo view('menu', $data);
     }
+
+    public function detailmenu($id_jenis)
+    {
+        $data = [
+            'makanan' => $this->makananModel->getMakanan($id_jenis),
+            'id_jenis' => $id_jenis
+        ];
+        
+        echo view('detailmenu', $data);
+        echo view('layout/footer');
+    }
+    
+
 
     public function tambahKeKeranjang()
     {

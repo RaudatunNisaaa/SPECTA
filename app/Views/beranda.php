@@ -61,7 +61,7 @@
                     <div class="navbar-nav mx-auto text-blue">
                         <a href="beranda" class="nav-item nav-link active text-blue">Beranda</a>
                         <a href="menu" class="nav-item nav-link text-blue">Menu</a>
-                        <a href="pesanan" class="nav-item nav-link text-blue">Pesanan</a>
+                        <a href="login" class="nav-item nav-link text-blue">Login</a>
                     </div>
                 </div>
             </nav>
@@ -74,8 +74,8 @@
         <div class="container py-5">
             <div class="row g-5 align-items-center">
                 <div class="col-md-12 col-lg-7">
-                    <h4 class="mb-3 text-primary text-blue">Selamat Datang</h4>
-                    <h1 class="mb-5 display-3 text-primary text-blue">Catering Rosita</h1>
+                    <h1 class="mb-3 display-3 text-primary text-blue">Selamat Datang</h1>
+                    <h4 class="mb-5 text-primary text-blue" style="font-size: 16px;">Nikmati kelezatan yang sempurna untuk setiap acara Anda. Kami siap menyajikan hidangan terbaik dengan bahan-bahan segar dan berkualitas. Selamat menikmati layanan kami!</h4>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ use App\Models\PesananModel;
 use APP\Models\MakananModel;
 use App\Models\AkunModel;
 use App\Models\PegawaiModel;
+use App\Models\makanan_m;
 
 class Home extends BaseController
 {
@@ -27,23 +28,24 @@ class Home extends BaseController
 
     public function owner()
     {
-        $makananModel = new MakananModel();
-        $makanan = $makananModel->findAll();
-        $data['makanan']=count($makanan);
-
-        $akunModel = new AkunModel();
-        $akun = $akunModel->findAll();
-        $data['akun']=count($akun);
-
-        $pesananModel = new PesananModel();
-        $pesanan = $pesananModel->findAll();
-        $data['pesanan']=count($pesanan);
-
-        $pegawaiModel = new PegawaiModel();
-        $pegawai = $pegawaiModel->findAll();
-        $data['pegawai']=count($pegawai);
         
-        echo view('layout/sidebar');
+                $pesananModel = new PesananModel();
+                $pesanan = $pesananModel->findAll();
+                $data['pesanan']=count($pesanan);
+                
+                $akunModel = new AkunModel();
+                $akun = $akunModel->findAll();
+                $data['akun']=count($akun);
+                $pegawaiModel = new PegawaiModel();
+                $pegawai = $pegawaiModel->findAll();
+                $data['pegawai']=count($pegawai);
+                $makanan_m = new makanan_m();
+        $makanan = $makanan_m->findAll();
+        $data['makanan'] = count($makanan);
+
+
+                echo view('layout/header');
+                echo view('layout/sidebar');
         return view('owner/index', $data);
         echo view('layout/footer');
     }
