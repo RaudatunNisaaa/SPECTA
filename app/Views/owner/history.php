@@ -6,94 +6,81 @@
     <title>Kelola Pegawai</title>
 </head>
 <body>
-        <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <!-- Content Row -->
+                <div class="card shadow mb-4 mt-3">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Data History</h6>
                     </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Data History
+                    <div class="card-body">
+                        <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Pelanggan</th>
+                                            <th>No Hp</th>
+                                            <th>Jumlah</th>
+                                            <th>Tanggal Pengambilan</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        foreach ($history as $h) {
+                                        ?>
+                                        <tr>
+                                            <td><?= $no; ?></td>
+                                            <td><?= $h['nama_pelanggan']; ?></td>
+                                            <td><?= $h['phone']; ?></td>
+                                            <td><?= $h['jumlah']; ?></td>
+                                            <td><?= $h['tglAmbil']; ?></td>
+                                            <td><?= $h['alamat']; ?></td>
+                                        </tr>
+                                        <?php
+                                        $no++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.panel-body -->
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Pelanggan</th>
-                                        <th>No Hp</th>
-                                        <th>Jumlah</th>
-                                        <th>Tanggal Pengambilan</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    // var_dump($akun);exit;
-                                    foreach($history as $h){
-                                    ?>
-                                    <tr>
-                                        <td><?= $no; ?></td>
-                                        <td><?= $h['nama_pelanggan']; ?></td>
-                                        <td><?= $h['phone']; ?></td>
-                                        <td><?= $h['jumlah']; ?></td>
-                                        <td><?= $h['tglAmbil']; ?></td>
-                                        <td><?= $h['alamat']; ?></td>
-                                        <td><?= $h['status']; ?></td>
-                                    </tr>
-                                    <?php
-                                    $no++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.panel-body -->
+                        <!-- /.panel -->
                     </div>
-                    <!-- /.panel -->
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-                </div>
-                <!-- End of Container Fluid -->
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>© Catering Rosita 2024</span>
-                    </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
-
+            <!-- End of Container Fluid -->
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+    </div>
+
+        <!-- Footer -->
+        <!-- <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>© Catering Rosita 2024</span>
+                </div>
+            </div>
+        </footer> -->
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
 
 </body>
 </html>

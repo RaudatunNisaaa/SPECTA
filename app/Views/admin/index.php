@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('assets/css/sb-admin-2.css') ?>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <title>Dashboard</title>
-    <link href="/assets/fontawesome.css" rel="stylesheet">
+    <style>
+        .navbar {
+            position: fixed;
+            width: calc(100% - 225px);
+            top: 0;
+            z-index: 1000;
+        }
+        body {
+            padding-top: 0;
+        }
+        #accordionSidebar {
+            z-index: 1;
+            position: fixed;
+            top: 0;
+        }
+        #content-wrapper {
+            padding-top: 80px; 
+        }
+    </style>
 </head>
 <body>
 
@@ -13,23 +32,23 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <div class="input-group">
-        <h5>Selamat Datang Admin!</h5>
-    </div>
-    <ul class="navbar-nav ml-auto">
+            <div class="input-group">
+                <h5>Selamat Datang Admin!</h5>
+            </div>
+            <ul class="navbar-nav ml-auto">
 
-    <div class="topbar-divider d-none d-sm-block"></div>
+            <div class="topbar-divider d-none d-sm-block"></div>
 
-    <!-- Nav Item - User Information -->
-    <li class="nav-item dropdown no-arrow">
-            <a class="dropdown-item" href="#" onclick="logout()">
-                <i class="fas fa-power-off fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-            </a>
-    </li>
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+                    <a class="dropdown-item" href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+            </li>
 
-</ul>
-</nav>
+        </ul>
+        </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-900">Dashboard</h1>

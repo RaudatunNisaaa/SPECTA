@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/sb-admin-2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../public/assets/css/sb-admin-2.css">
     <title>Document</title>
 </head>
 <body>
@@ -40,8 +39,11 @@
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>
-                            <input type="text" class="form-control" id="foto" name="foto">
-                            <div id="error_foto" class="invalid-feedback"></div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="foto" name="foto">
+                                <label class="custom-file-label" for="foto">Pilih gambar..</label>
+                            </div>
+                        <div id="error_foto" class="invalid-feedback"></div>
                         </div>
                         <div>
                             <button type="button" onclick="tambahmenu()" class="btn btn-primary">Tambah Menu</button>
@@ -69,6 +71,18 @@
 <script src="/assets/js/demo/chart-area-demo.js"></script>
 <script src="/assets/js/demo/chart-pie-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputFile = document.querySelector('#foto');
+            const inputLabel = document.querySelector('.custom-file-label');
+
+            inputFile.addEventListener('change', (event) => {
+                const fileName = event.target.files[0].name;
+                inputLabel.textContent = fileName;
+            });
+        });
+    </script>
 
 <script>
     function tambahmenu() {
@@ -102,7 +116,7 @@
     }
 
     function batal() {
-        window.location.href = '/datamenu';
+        window.location.href = '';
     }
 
     function displayErrors(errors) {

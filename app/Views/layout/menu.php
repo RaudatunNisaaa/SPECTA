@@ -19,7 +19,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand bg-gradient-warning d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-icon">
-                <img style="width: 55px" src="img/logo.png" alt="">
+                <img style="width: 55px" src="../img/logo.png" alt="">
             </div>
                 <div class="sidebar-brand-text mx-3"> Catering Rosita </div>
             </a>

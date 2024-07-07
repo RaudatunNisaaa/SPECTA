@@ -1,11 +1,19 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\AkunModel;
+use CodeIgniter\Controller;
 
 class Akun extends BaseController
 {
-    
+    protected $akunModel;
+
+    public function __construct()
+    {
+        $this->akunModel = new AkunModel();
+    }
+
     public function index()
     {
         $akunModel = new AkunModel();
@@ -13,7 +21,7 @@ class Akun extends BaseController
 
         echo view('layout/header');
         echo view('layout/sidebar');
-        return view('owner/akun', $akun);
+        echo view('owner/akun', $akun);
         echo view('layout/footer');
     }
 
@@ -24,37 +32,51 @@ class Akun extends BaseController
 
     public function tambah()
     {
-        echo view('layout/header');
+        echo view('layout/topbar');
         echo view('layout/sidebar');
-        echo view('owner/tambah_akun');
+        echo view('owner/tambahakun');
         echo view('layout/footer');
     }
 
     public function simpan()
     {
         $akunModel = new AkunModel();
-        
-        // Check if the form is submitted
-        // if ($this->request->getMethod() === 'post') {
-            // Validate the form input
-            
-            // if ($validation->withRequest($this->request)->run()) {
-                // Get the form data
-                $data = [
-                    'username' => $this->request->getPost('username'),
-                    'password' => $this->request->getPost('password'),
-                    'level' => $this->request->getPost('level')
-                ];
-                // var_dump($data);exit;
 
-                // Save the data to the database
-                $akunModel->save($data);
+        $data = [
+            'username' => $this->request->getPost('username'),
+            'password' => $this->request->getPost('password'),
+            'level' => $this->request->getPost('level')
+        ];
 
-                // Redirect to the akun index page
-                return redirect()->to('/akun');
-            // }
-        // }
+        $akunModel->save($data);
 
+        return redirect()->to('/akun');
     }
 
+    public function hapusAkun($id_akun)
+    {
+        $this->akunModel->delete($id_akun);
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function editAkun($id_akun)
+    {
+        $input = $this->request->getJSON();
+
+        if (!isset($input->username) || !isset($input->password) || !isset($input->level)) {
+            return $this->respond(['status' => 'error', 'message' => 'Data tidak valid'], 400);
+        }
+
+        $data = [
+            'username' => $input->username,
+            'password' => $input->password,
+            'level' => $input->level
+        ];
+
+        if ($this->akunModel->update($id_akun, $data)) {
+            return $this->respond(['status' => 'success']);
+        } else {
+            return $this->respond(['status' => 'error', 'message' => 'Gagal mengubah akun'], 500);
+        }
+    }
 }

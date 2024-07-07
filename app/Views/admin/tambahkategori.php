@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/assets/css/sb-admin-2.css">
     <title>Document</title>
+    <style>
+        .custom-file-label::after {
+            content: "Browse";
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .custom-file-label {
+            overflow: hidden;
+        }
+        .custom-file-input:focus ~ .custom-file-label {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+    </style>
 </head>
 <body>
     <!-- Your HTML content -->
@@ -25,22 +42,25 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="container">
-                    <form action="/Kategori/tambahKategori" method="POST" id="formKategori">
-                        <div class="form-group">
-                            <label for="jenis_makanan">Kategori Menu</label>
-                            <input type="text" class="form-control" id="jenis_makanan" name="jenis_makanan" autofocus>
-                            <div id="error_jenis_makanan" class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="foto">Foto</label>
-                            <input type="text" class="form-control" id="foto" name="foto">
-                            <div id="error_foto" class="invalid-feedback"></div>
-                        </div>
-                        <div>
-                            <button type="button" onclick="tambahkategori()" class="btn btn-primary">Tambah Kategori</button>
-                            <button type="button" onclick="batal()" class="btn btn-danger">Batal</button>
-                        </div>
-                    </form>
+                        <form action="/Kategori/tambahKategori" method="POST" id="formKategori" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="jenis_makanan">Kategori Menu</label>
+                                <input type="text" class="form-control" id="jenis_makanan" name="jenis_makanan" autofocus>
+                                <div id="error_jenis_makanan" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="foto">Foto</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="foto" name="foto">
+                                    <label class="custom-file-label" for="foto">Pilih gambar..</label>
+                                </div>
+                                <div id="error_foto" class="invalid-feedback"></div>
+                            </div>
+                            <div>
+                                <button type="button" onclick="tambahkategori()" class="btn btn-primary">Tambah Kategori</button>
+                                <button type="button" onclick="batal()" class="btn btn-danger">Batal</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -62,6 +82,18 @@
 <script src="/asset/js/demo/chart-area-demo.js"></script>
 <script src="/asset/js/demo/chart-pie-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputFile = document.querySelector('#foto');
+            const inputLabel = document.querySelector('.custom-file-label');
+
+            inputFile.addEventListener('change', (event) => {
+                const fileName = event.target.files[0].name;
+                inputLabel.textContent = fileName;
+            });
+        });
+    </script>
 
     <script>
         function tambahkategori() {

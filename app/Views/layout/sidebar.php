@@ -1,3 +1,4 @@
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -13,6 +14,37 @@
             <style>
                 #content-wrapper {
                     margin-left: 225px; /* Adjust this value based on the width of your sidebar */
+                }
+            </style>
+            <style>
+                #accordionSidebar:hover {
+                    width: 225px;
+                }
+            </style>
+            <style>
+                .sidebar .nav-item {
+                    transition: all 0.3s;
+                }
+            </style>
+            <style>
+                .sidebar .nav-item:hover {
+                    background-color: rgba(255, 255, 255, 0.2); /* Light Blue */
+
+                }
+            </style>
+            <style>
+                .sidebar .nav-link {
+                    white-space: nowrap;
+                }
+            </style>
+            <style>
+                .sidebar .nav-link .fas {
+                    margin-right: 1rem;
+                }
+            </style>
+            <style>
+                #accordionSidebar:hover ~ #content-wrapper {
+                    margin-left: 225px;
                 }
             </style>
 
@@ -59,14 +91,14 @@
 </li>
 
 <li class="nav-item active">
-    <a class="nav-link" href="/pesanan">
+    <a class="nav-link" href="/datapesanan">
         <i class="fas fa-fw fa-shopping-cart"></i>
         <span>Pesanan</span>
     </a>
 </li>
 
 <li class="nav-item active">
-    <a class="nav-link" href="/makanan">
+    <a class="nav-link" href="/datamakanan">
         <i class="fas fa-fw fa-hamburger"></i>
         <span>Makanan</span>
     </a>

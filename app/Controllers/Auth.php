@@ -29,7 +29,7 @@ class Auth extends BaseController
             if($akun['level'] == 'admin') {
                 return redirect()->to('/dashboard');
             } elseif($akun['level'] == 'owner') {
-                return redirect()->to('/akun');
+                return redirect()->to('/dasboard');
             } else {
                 return redirect()->to('/login')->with('errors', collect(['password' => 'Level not recognized.'])->all());
             }

@@ -18,30 +18,21 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
                         <h1 class="h3 mb-0 text-gray-800">Kelola Data Menu</h1>
                     </div>
 
                     <!-- Content Row -->
-                <div class="row">
-
-<!-- Area Chart -->
-<div class="col-xl-12 col-lg-7">
-    <div class="card shadow mb-2">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-                <a class="btn btn-primary mx-3 my-1" style="width: 220px;" href="/tambahkategori">
-                    (+) Tambah Kategori Menu
-                </a>
-        </div>
-            <!-- <div class="my-3">
-                
-            </div> -->
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class='container'>
-                <table class="table table-bordered mb-0">
-                    <thead>
+                    <div class="card shadow mb-4 mt-3">
+                    <div class="card-header py-3">
+                        <a class="btn btn-primary mx-3 my-1" style="width: 220px;" href="/tambahkategori">
+                            (+) Tambah Kategori Menu
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
                         <tr>
                             <th>NO</th>
                             <th>Kategori</th>
@@ -144,51 +135,87 @@
     }
 
     function editKategori(id_jenis) {
-        Swal.fire({
-            title: 'Edit Kategori',
-            html: `
-                <input type="text" id="edit_jenis_makanan" class="swal2-input" placeholder="Jenis Makanan">
-                <input type="text" id="edit_foto" class="swal2-input" placeholder="Foto">
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Simpan',
-            cancelButtonText: 'Batal',
-            confirmButtonColor: '#3085d6',
-            preConfirm: () => {
-                const jenis_makanan = Swal.getPopup().querySelector('#edit_jenis_makanan').value;
-                const foto = Swal.getPopup().querySelector('#edit_foto').value;
-                if (!jenis_makanan || !foto) {
-                    Swal.showValidationMessage('Kategori dan Foto tidak boleh kosong');
-                    return false;
-                }
-                return { jenis_makanan: jenis_makanan, foto: foto };
+    Swal.fire({
+        title: 'Edit Kategori',
+        html: `
+            <form id="editKategoriForm" enctype="multipart/form-data">
+                <div class="form-group" style="text-align: left;">
+                    <label for="edit_jenis_makanan" class="form-label">Jenis Menu</label>
+                    <input type="text" id="edit_jenis_makanan" name="jenis_makanan" class="form-control" placeholder="">
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label for="edit_foto" class="form-label">Foto</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="edit_foto" name="foto">
+                        <label for="edit_foto" class="custom-file-label">Pilih gambar..</label>
+                    </div>
+                </div>
+            </form>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Simpan',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#3085d6',
+        didOpen: () => {
+            const inputFile = document.querySelector('#edit_foto');
+            const inputLabel = document.querySelector('.custom-file-label');
+
+            inputFile.addEventListener('change', (event) => {
+                const fileName = event.target.files[0].name;
+                inputLabel.textContent = fileName;
+            });
+        },
+        preConfirm: () => {
+            const form = Swal.getPopup().querySelector('#editKategoriForm');
+            const formData = new FormData(form);
+
+            const jenis_makanan = formData.get('jenis_makanan');
+            const foto = formData.get('foto');
+
+            if (!jenis_makanan || !foto) {
+                Swal.showValidationMessage('Kategori dan Foto tidak boleh kosong');
+                return false;
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`/Kategori/editKategori/${id_jenis}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(result.value)
-                })
-                .then(() => {
+
+            return formData;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = result.value;
+
+            fetch(`/Kategori/editKategori/${id_jenis}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response data:', data); // Debugging line to check the response data
+                if (data.success) {
                     Swal.fire({
-                        text: 'Kategori berhasil diubah!',
+                        text: 'Data kategori berhasil diubah!',
                         icon: 'success'
                     }).then(() => {
                         window.location.reload();
                     });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+                } else {
                     Swal.fire(
                         'Gagal!',
-                        'Kategori gagal diubah.',
+                        'Data kategori gagal diubah.',
                         'error'
                     );
-                });
-            }
-        });
-    }    
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                    'Gagal!',
+                    'Data kategori gagal diubah.',
+                    'error'
+                );
+            });
+        }
+    });
+}
+
+
 </script>

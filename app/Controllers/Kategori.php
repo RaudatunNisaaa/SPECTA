@@ -30,7 +30,7 @@ class Kategori extends BaseController
 
     public function tambahkategori()
     {
-        echo view('layout/header');
+        echo view('layout/topbar');
         echo view('layout/menu');
         echo view('admin/tambahkategori');
         echo view('layout/footer');
@@ -51,9 +51,13 @@ class Kategori extends BaseController
                 'errors' => $this->validator->getErrors()
             ]);
         } else {
+
+            $fileFoto = $this->request->getFile('foto');
+            $fileFoto->move('img');
+            $namaFoto = $fileFoto->getName();
             $data = [
                 'jenis_makanan' => $jenis_makanan,
-                'foto' => $foto
+                'foto' => $namaFoto
             ];
 
             $this->kategoriModel->insert($data);
@@ -70,33 +74,31 @@ class Kategori extends BaseController
         return $this->response->setJSON(['status' => 'success']);
     }
 
-    public function editKategori($id_jenis)
-    {
-        $input = $this->request->getJSON();
-
-        if (!isset($input->jenis_makanan) || !isset($input->foto)) {
-            return $this->respond(['status' => 'error', 'message' => 'Data tidak valid'], 400);
-        }
-
+    public function editKategori($id_jenis) {
+        $jenis_makanan = $this->request->getPost('jenis_makanan');
+        $foto = $this->request->getFile('foto');
+    
+        // Perform your database update logic here
         $data = [
-            'jenis_makanan' => $input->jenis_makanan,
-            'foto' => $input->foto
+            'jenis_makanan' => $jenis_makanan
         ];
-        if ($this->kategoriModel->update($id_jenis, $data)) {
-            return $this->respond(['status' => 'success']);
+    
+        if ($foto->isValid() && !$foto->hasMoved()) {
+            $fotoName = $foto->getRandomName();
+            // Move the file to the public/img directory
+            $foto->move(FCPATH . 'img', $fotoName);
+            $data['foto'] = $fotoName;
+        }
+    
+        $model = new KategoriModel();
+        $result = $model->update($id_jenis, $data);
+    
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
         } else {
-            return $this->respond(['status' => 'error', 'message' => 'Gagal mengubah kategori'], 500);
+            return $this->response->setJSON(['success' => false]);
         }
     }
+    
 
-    // public function detailKategori($id_jenis)
-    // {
-    //     $data = [
-    //         'menu' => $this->makananModel->getMakanan($id_jenis)
-    //     ];
-    //     echo view('layout/header');
-    //     echo view('layout/menu');
-    //     echo view('datamenu', $data);
-    //     echo view('layout/footer');
-    // }
 }

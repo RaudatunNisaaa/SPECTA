@@ -35,37 +35,61 @@
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="/beranda">Beranda</a></li>
             <li class="breadcrumb-item"><a href="/menu">Menu</a></li>
+            <li class="breadcrumb-item active" style="color: white;">Detail Menu</li>
         </ol>
     </div>
 
-    <div class="container mt-5">
-        <div class="row">
-            <?php if (!empty($makanan) && is_array($makanan)): ?>
-                <?php foreach ($makanan as $value): ?>
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="rounded position-relative fruite-item shadow">
-                            <div class="fruite-img">
-                                <img src="/img/<?= esc($value['foto']); ?>" class="card-img-top" alt="Foto Menu">
-                            </div>
-                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                <h4 class="card-title"><?= esc($value['makanan']); ?></h4>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                <p class="text-dark fs-5 fw-bold mb-0">Rp.<?= number_format($value['harga'], 0, ',', '.'); ?>/box</p>
-                                    <a href="/menu/pesan/<?= $value['id_makanan']; ?>" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> pesan
-                                    </a>
+    <div id="tab-3" class="container mt-5 tab-fane fade show">
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <?php if (!empty($makanan) && is_array($makanan)): ?>
+                        <?php foreach ($makanan as $value): ?>
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img src="/img/<?= esc($value['foto']); ?>" class="card-img-top" alt="Foto Menu" style="object-fit: cover; width: 100%; height: 100%; aspect-ratio: 1;">
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= esc($value['id_jenis']); ?></div>                    
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4 class="card-title"><?= esc($value['makanan']); ?></h4>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">Rp.<?= number_format($value['harga'], 0, ',', '.'); ?> / box</p>
+                                            <a href="/pesan/<?= $value['id_makanan']; ?>" class="btn border border-secondary rounded-pill mt-3 px-3 text-primary d-block mx-auto">
+                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> pesan
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="col-md-12">
+                            <p class="text-center">Belum ada data makanan.</p>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="col-md-12">
-                    <p class="text-center">Tidak ada data makanan.</p>
+                    <?php endif; ?>
                 </div>
-            <?php endif; ?>
+            </div>
         </div>
     </div>
+
+    <!-- Copyright Start -->
+    <!-- <div class="container-fluid copyright bg-light py-4 mt-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="text-dark"><a href="#"><i class="fas fa-copyright text-dark me-2"></i>Catering Rosita</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-6 my-auto text-center text-md-end text-dark">
+                        <!-/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        <!-- Created By <a class="border-bottom" >SPECTA<a class="border-bottom"></a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- Copyright End -->
         
             <script>
                     // Fungsi untuk menambahkan item ke keranjang

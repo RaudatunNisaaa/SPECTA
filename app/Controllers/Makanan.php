@@ -3,14 +3,64 @@
 namespace App\Controllers;
 
 use App\Models\MakananModel;
+use App\Models\KategoriModel;
 
 class Makanan extends BaseController
 {
     protected $makananModel;
+    protected $kategoriModel;
 
     public function __construct()
     {
         $this->makananModel = new MakananModel();
+        $this->kategoriModel = new KategoriModel();
+    }
+
+    public function index()
+    {
+        $dataKategori = $this->kategoriModel->findAll();
+        $data = [
+            'kategori' => $dataKategori
+        ];
+
+        echo view('menu', $data);
+    }
+
+    // public function menu()
+    // {
+    //     $makananModel = new MakananModel();
+    //     $makanan = $makananModel->findAll();
+    //     $data['makanan'] = count($makanan);
+
+    //     $pesananModel = new PesananModel();
+    //     $pesanan = $pesananModel->findAll();
+    //     // var_dump('aa');exit;
+    //     $data['pesanan'] = count($pesanan);
+
+    //     // var_dump($jumlahMakanan);exit;
+    //     return view('index', $data);
+    // }
+
+    public function detailmenu($id_jenis)
+    {
+        $dataKategori = $this->kategoriModel->findAll;
+        $model = new MakananModel();
+        $data = [
+            'jenis' => $model->getJenis(),
+            'makanan' => $this->makananModel->getMakanan($id_jenis),
+            'id_jenis' => $id_jenis,
+            'jenis_makanan' => $this->kategoriModel->where('id_jenis', $id_jenis)->first()
+        ];
+        
+        echo view('detailmenu', $data);
+        echo view('layout/footer');
+    }
+
+    public function pesan($id)
+    {
+        $data['pesan'] = $this->makananModel->find($id);
+
+        return view('pesan', $data);
     }
 
     public function datamenu($id_jenis)
@@ -27,9 +77,20 @@ class Makanan extends BaseController
 
     public function tambahmenu($id_jenis)
     {
-        echo view('layout/header');
+        echo view('layout/topbar');
         echo view('layout/menu');
         echo view('admin/tambahmenu', ['id_jenis' => $id_jenis]);
+        echo view('layout/footer');
+    }
+
+    public function datamakanan()
+    {
+        $data = [
+            'makanan' => $this->makananModel->findAll(),
+        ];
+        echo view('layout/header');
+        echo view('layout/sidebar');
+        echo view('owner/datamakanan', $data);
         echo view('layout/footer');
     }
 
@@ -57,11 +118,15 @@ class Makanan extends BaseController
                 'errors' => $this->validator->getErrors()
             ]);
         } else {
+
+            $fileFoto = $this->request->getFile('foto');
+            $fileFoto->move('img');
+            $namaFoto = $fileFoto->getName();
             $data = [
                 'id_jenis' => $id_jenis,
                 'makanan' => $makanan,
                 'harga' => $harga,
-                'foto' => $foto
+                'foto' => $namaFoto
             ];
 
             $this->makananModel->insert($data);
@@ -79,24 +144,31 @@ class Makanan extends BaseController
         return $this->response->setJSON(['status' => 'success']);
     }
 
-    public function editMenu($id_makanan)
-    {
-        $input = $this->request->getJSON();
-
-        if (!isset($input->makanan) || !isset($input->harga) || !isset($input->foto)) {
-            return $this->respond(['status' => 'error', 'message' => 'Data tidak valid'], 400);
-        }
-
+    public function editMenu($id_makanan) {
+        $makanan = $this->request->getPost('makanan');
+        $harga = $this->request->getPost('harga');
+        $foto = $this->request->getFile('foto');
+    
         $data = [
-            'makanan' => $input->makanan,
-            'harga' => $input->harga,
-            'foto' => $input->foto
+            'makanan' => $makanan,
+            'harga' => $harga
         ];
-        if ($this->makananModel->update($id_makanan, $data)) {
-            return $this->respond(['status' => 'success']);
+    
+        if ($foto->isValid() && !$foto->hasMoved()) {
+            $fotoName = $foto->getRandomName();
+            $foto->move(FCPATH . 'img', $fotoName);
+            $data['foto'] = $fotoName;
+        }
+    
+        $model = new MakananModel();
+        $result = $model->update($id_makanan, $data);
+    
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
         } else {
-            return $this->respond(['status' => 'error', 'message' => 'Gagal mengubah menu'], 500);
+            return $this->response->setJSON(['success' => false]);
         }
     }
-
+    
+    
 }
