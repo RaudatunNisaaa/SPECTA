@@ -53,7 +53,7 @@ class Pegawai extends BaseController
 
         $pegawaiModel->save($data);
 
-        return redirect()->to('/pegawai');
+        return redirect()->to('/owner/pegawai');
     }
 
     public function hapusPegawai($id_pegawai)
@@ -76,6 +76,7 @@ class Pegawai extends BaseController
             'phone' => $input->phone,
             'alamat' => $input->alamat,
             'tugas' => $input->tugas
+
         ];
 
         if ($this->pegawaiModel->update($id_pegawai, $data)) {
