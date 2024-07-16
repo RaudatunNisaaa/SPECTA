@@ -22,10 +22,10 @@ class MakananModel extends Model
     public function getMakanan($id_jenis = false)
     {
         if ($id_jenis === false) {
-            return $this->findAll();
+            return $this->join('jenismakanan','jenismakanan.id_jenis=makanan.id_jenis')->findAll();
         }
 
-        return $this->where(['id_jenis' => $id_jenis])->findAll();
+        return $this->join('jenismakanan','jenismakanan.id_jenis=makanan.id_jenis')->where(['makanan.id_jenis' => $id_jenis])->findAll();
     }
 }
 ?>

@@ -50,7 +50,7 @@
                                     <div class="fruite-img">
                                         <img src="/img/<?= esc($value['foto']); ?>" class="card-img-top" alt="Foto Menu" style="object-fit: cover; width: 100%; height: 100%; aspect-ratio: 1;">
                                     </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= esc($value['id_jenis']); ?></div>                    
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= esc($value['jenis_makanan']); ?></div>                    
                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                         <h4 class="card-title"><?= esc($value['makanan']); ?></h4>
                                         <div class="d-flex justify-content-between flex-lg-wrap">

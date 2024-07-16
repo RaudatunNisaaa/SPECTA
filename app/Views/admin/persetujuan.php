@@ -34,6 +34,7 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Nama Pelanggan</th>
+                                                <th>Menu</th>
                                                 <th>No. hp</th>
                                                 <th>Jumlah</th>
                                                 <th>Tanggal Ambil</th>
@@ -48,8 +49,9 @@
                                             $no=1;
                                              foreach ($tunggu as $value) : ?>
                                             <tr>
-                                                <td><?= htmlspecialchars($no++); ?></td>
+                                            <td><?= htmlspecialchars($no++); ?></td>
                                                 <td><?= htmlspecialchars($value['nama_pelanggan']); ?></td>
+                                                <td><?= htmlspecialchars($value['makanan']); ?></td>
                                                 <td><?= htmlspecialchars($value['phone']); ?></td>
                                                 <td><?= htmlspecialchars($value['jumlah']); ?></td>
                                                 <td><?= htmlspecialchars($value['tglAmbil']); ?></td>

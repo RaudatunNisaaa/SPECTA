@@ -50,10 +50,10 @@ class Pegawai extends BaseController
             'alamat' => $this->request->getPost('alamat'),
             'tugas' => $this->request->getPost('tugas')
         ];
-
+// var_dump($data);exit;
         $pegawaiModel->save($data);
 
-        return redirect()->to('/owner/pegawai');
+        return redirect()->to('/pegawai');
     }
 
     public function hapusPegawai($id_pegawai)
@@ -64,25 +64,27 @@ class Pegawai extends BaseController
 
     public function editPegawai($id_pegawai)
     {
-        $input = $this->request->getJSON();
-
-        if (!isset($input->nama_pegawai) || !isset($input->jenis_kelamin) || !isset($input->phone) || !isset($input->alamat) || !isset($input->tugas)) {
-            return $this->respond(['status' => 'error', 'message' => 'Data tidak valid'], 400);
-        }
+            $nama_pegawai = $this->request->getPost('nama_pegawai');
+            $jenis_kelamin = $this->request->getPost('jenis_kelamin');
+            $phone = $this->request->getPost('phone');
+            $alamat = $this->request->getPost('alamat');
+            $tugas = $this->request->getPost('tugas');
 
         $data = [
-            'nama_pegawai' => $input->nama_pegawai,
-            'jenis_kelamin' => $input->jenis_kelamin,
-            'phone' => $input->phone,
-            'alamat' => $input->alamat,
-            'tugas' => $input->tugas
-
+            'nama_pegawai' => $nama_pegawai,
+            'jenis_kelamin' => $jenis_kelamin,
+            'phone' => $phone,
+            'alamat' => $alamat,
+            'tugas' => $tugas
         ];
+// var_dump($data);exit;
+        $model = new PegawaiModel();
+        $result = $model->update($id_pegawai, $data);
 
-        if ($this->pegawaiModel->update($id_pegawai, $data)) {
-            return $this->respond(['status' => 'success']);
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
         } else {
-            return $this->respond(['status' => 'error', 'message' => 'Gagal mengubah akun'], 500);
+            return $this->response->setJSON(['success' => false]);
         }
     }
 

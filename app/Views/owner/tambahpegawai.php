@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                         <label for="tugas">Tugas</label>
-                            <select class="form-control" id="tugas" name="tugas" required>
+                            <select class="form-control" id="tugas" name="jenis_kelamin" required>
                                 <option value="perempuan">Perempuan</option>
                                 <option value="laki-laki">Laki-laki</option>
                             </select>

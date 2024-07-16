@@ -155,6 +155,7 @@
         Swal.fire({
             title: 'Edit Data Pegawai',
             html: `
+            <form id="editPegawaiForm" enctype="multipart/form-data">
                 <div class="mb-3" style="text-align: left;">
                     <label for="edit_nama_pegawai" class="form-label">Nama Pegawai</label>
                     <input type="text" id="edit_nama_pegawai" class="form-control" placeholder="">
@@ -182,22 +183,28 @@
                         <option value="packing">Packing</option>
                     </select>
                 </div>
+            </form>
             `,
             showCancelButton: true,
             confirmButtonText: 'Simpan',
             cancelButtonText: 'Batal',
             confirmButtonColor: '#3085d6',
             preConfirm: () => {
-                const nama_pegawai = Swal.getPopup().querySelector('#edit_nama_pegawai').value;
-                const jenis_kelamin = Swal.getPopup().querySelector('#edit_jenis_kelamin').value;
-                const phone = Swal.getPopup().querySelector('#edit_phone').value;
-                const alamat = Swal.getPopup().querySelector('#edit_alamat').value;
-                const tugas = Swal.getPopup().querySelector('#edit_tugas').value;
+                const form = Swal.getPopup().querySelector('#editPegawaiForm');
+                const formData = new FormData(form);
+
+                const nama_pegawai = formData.get('edit_nama_pegawai');
+                const jenis_kelamin = formData.get('edit_jenis_kelamin');
+                const phone = formData.get('edit_phone');
+                const alamat = formData.get('edit_alamat');
+                const tugas = formData.get('edit_tugas');
+                
+
                 if (!nama_pegawai || !jenis_kelamin || !phone || !alamat || !tugas) {
-                    Swal.showValidationMessage('Nama pegawai, jenis kelamin, no. hp, alamat dan tugas tidak boleh kosong');
+                    Swal.showValidationMessage('Tidak boleh ada kolom yang kosong. Silakan isi semua kolom.');
                     return false;
                 }
-                return { nama_pegawai: nama_pegawai, jenis_kelamin: jenis_kelamin, phone: phone, alamat: alamat, tugas: tugas};
+                return formData;
             }
         }).then((result) => {
             if (result.isConfirmed) {

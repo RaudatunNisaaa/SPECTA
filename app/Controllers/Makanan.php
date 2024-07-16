@@ -51,15 +51,15 @@ class Makanan extends BaseController
             'id_jenis' => $id_jenis,
             'jenis_makanan' => $this->kategoriModel->where('id_jenis', $id_jenis)->first()
         ];
-        
+        // var_dump($data['makanan']);exit;
         echo view('detailmenu', $data);
         echo view('layout/footer');
     }
 
     public function pesan($id)
     {
-        $data['pesan'] = $this->makananModel->find($id);
-
+        $data['pesan'] = $this->makananModel->join('jenismakanan','jenismakanan.id_jenis=makanan.id_jenis','left')->find($id);
+// var_dump($data);exit;
         return view('pesan', $data);
     }
 

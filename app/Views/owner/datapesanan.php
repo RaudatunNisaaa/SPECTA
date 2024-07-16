@@ -26,6 +26,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Pelanggan</th>
+                                            <th>Menu</th>
                                             <th>No Hp</th>
                                             <th>Jumlah</th>
                                             <th>Tanggal Pengambilan</th>
@@ -40,6 +41,7 @@
                                             <tr>
                                                 <td><?= htmlspecialchars($no++); ?></td>
                                                 <td><?= htmlspecialchars($value['nama_pelanggan']); ?></td>
+                                                <td><?= htmlspecialchars($value['makanan']); ?></td>
                                                 <td><?= htmlspecialchars($value['phone']); ?></td>
                                                 <td><?= htmlspecialchars($value['jumlah']); ?></td>
                                                 <td><?= htmlspecialchars($value['tglAmbil']); ?></td>

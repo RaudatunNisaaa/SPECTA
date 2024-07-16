@@ -30,6 +30,7 @@ $routes->get('/pegawai', 'Pegawai::index');
 $routes->get('/pegawai/tambah', 'Pegawai::tambahpegawai');
 $routes->delete('/Pegawai/hapusPegawai/(:num)', 'Pegawai::hapusPegawai/$1');
 $routes->put('/Pegawai/editPegawai/(:num)', 'Pegawai::editPegawai/$1');
+$routes->post('/pegawai/simpanPegawai', 'Pegawai::simpanPegawai');
 
 $routes->get('/datapesanan', 'Pesanan::datapesanan');
 $routes->get('/datamakanan', 'Makanan::datamakanan');

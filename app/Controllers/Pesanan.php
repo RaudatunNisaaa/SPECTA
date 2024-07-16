@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\PesananModel;
 use App\Models\HistoryModel;
+use App\Models\MakananModel;
 
 class Pesanan extends BaseController
 {
@@ -12,48 +13,56 @@ class Pesanan extends BaseController
         $data = [
             'id_makanan' => $this->request->getPost('id_makanan'),
             'jumlah' => $this->request->getPost('jumlah'),
-            'tanggal_pengambilan' => $this->request->getPost('tanggal_pengambilan'),
+            'tglAmbil' => $this->request->getPost('tanggal_pengambilan'),
             'nama_pelanggan' => $this->request->getPost('nama_pelanggan'),
             'phone' => $this->request->getPost('phone'),
             'alamat' => $this->request->getPost('alamat'),
             'status' => 'Tunggu',
         ];
-
         $pesananModel = new PesananModel();
-        if ($pesananModel->insert($data)) {
-            $id_pesanan = $pesananModel->getInsertID();
+        // exit;
+        // if ($pesananModel->insert($data)) {
+            $pesananModel->insert($data);
+            // $id_pesanan = $pesananModel->insertID();
+            // var_dump($data);exit;
             // var_dump($id_pesanan);exit;
+            $cek=$pesananModel->select('id_pesanan')->orderBy('id_pesanan','desc')->first();
             $historyModel = new HistoryModel();
+            // var_dump($cek);exit;
             $historyData = [
-                'id_pesanan' => $id_pesanan,
-                'id_makanan' => $data['id_makanan'],
+                'id_pesanan' => $cek['id_pesanan'],
+                'id_makanan' => $this->request->getPost('id_makanan'),
                 'id_akun' => session()->get('id_akun'), // Assuming there's a session variable for user ID
-                'nama_pelanggan' => $data['nama_pelanggan'],
-                'phone' => $data['phone'],
-                'jumlah' => $data['jumlah'],
-                'tglAmbil' => $data['tanggal_pengambilan'],
-                'alamat' => $data['alamat'],
+                'nama_pelanggan' => $this->request->getPost('nama_pelanggan'),
+                'phone' => $this->request->getPost('phone'),
+                'jumlah' => $this->request->getPost('jumlah'),
+                'tglAmbil' => $this->request->getPost('tanggal_pengambilan'),
+                'alamat' => $this->request->getPost('alamat'),
                 'status' => 'Tunggu', // Default status for new orders
             ];
             // var_dump($historyData);exit;
             $historyModel->insert($historyData);
             // var_dump('a');exit;
             return redirect()->to('/menu'); 
-        } else {
-            return redirect()->back()->with('error', 'Gagal menyimpan data');
-        }
+        // } else {
+        //     return redirect()->back()->with('error', 'Gagal menyimpan data');
+        // }
 
-        $pesananModel->where('id_pesanan', $id_pesanan)->set('status', 'Tunggu')->update();
+        // $pesananModel->where('id_pesanan', $id_pesanan)->set('status', 'Tunggu')->update();
     }
 
     public function persetujuan()
     {
         $pesananModel = new PesananModel();
-        $tunggu = $pesananModel->where('status', 'Tunggu')->findAll();
-        $data['tunggu'] = $tunggu;
+        // $tunggu = $pesananModel->where('status', 'Tunggu')->findAll();
+        $data = [
+            'pesanan' => $pesananModel->join('makanan','makanan.id_makanan=pesanan.id_makanan','left')->where('status', 'Tunggu')->findAll(),
+            'tunggu' => $pesananModel->join('makanan','makanan.id_makanan=pesanan.id_makanan','left')->where('status', 'Tunggu')->findAll()
+        ];
+        // var_dump($data['pesanan']);exit;
         echo view('layout/header');
         echo view('layout/menu');
-        return view('admin/persetujuan',$data);
+        echo view('admin/persetujuan', $data);
         echo view('layout/footer');
     }
 
@@ -92,10 +101,12 @@ class Pesanan extends BaseController
 
     public function datapesanan()
     {
+        // var_dump('a');exit;
         $pesananModel = new PesananModel();
         $data = [
-            'pesanan' => $this->pesananModel->findAll(),
+            'pesanan' => $pesananModel->join('makanan','makanan.id_makanan=pesanan.id_makanan','left')->findAll(),
         ];
+        // var_dump($data);exit;
         echo view('layout/header');
         echo view('layout/sidebar');
         echo view('owner/datapesanan', $data);

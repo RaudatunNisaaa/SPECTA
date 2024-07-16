@@ -49,13 +49,13 @@
     <div class="container-fluid py-5">
         <div class="container py-5 text-center">
             <h1 class="mb-4">Detail Pesanan</h1>
-            <form action="<?= base_url('/pesanan/process'); ?>" method="post" id="formCheckout">
+            <form action="/pesanan/checkout" method="post">
                 <div class="row g-5 justify-content-center">
                     <div class="col-md-12 col-lg-6 col-xl-7">
                         <div class="row">
                             <div class="form-item w-100 text-start">
                                 <label class="form-label my-3">Jenis Makanan</label>
-                                <input type="text" class="form-control" value="<?= $pesan['id_jenis'] ?>" readonly>
+                                <input type="text" class="form-control" value="<?= $pesan['jenis_makanan'] ?>" readonly>
                                 <input type="hidden" class="form-control" name="id_makanan" value="<?= $pesan['id_makanan'] ?>" readonly>
                                 <div id="error_id_makanan" class="invalid-feedback"></div>
                             </div>
@@ -97,7 +97,7 @@
                                 <div id="error_tanggal_pengambilan" class="invalid-feedback"></div>
                             </div>
                             <div class="form-item w-100 text-center mt-4">
-                                <button type="button" class="btn btn-primary" style="background-color: blue; color: white;" onclick="selesai()">Selesai</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: blue; color: white;">Selesai</button>
                             </div>
                         </div>
                     </div>
