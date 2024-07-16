@@ -51,7 +51,7 @@
                             <td><?= $no++; ?></td>
                             <td><?= esc($value['makanan']); ?></td>
                             <td class="text-center"><?= esc($value['harga']); ?></td>
-                            <td class="text-center"><img src="/img/<?= esc($value['foto']); ?>" alt="Foto Menu" style="width: 100px; height: auto;"></td>
+                            <td class="text-center"><img src="/img/<?= esc($value['foto']); ?>" alt="Foto Menu" style="width: 100px; height: auto;" required></td>
                             <td class="text-center">
                                 <div style="display: flex; justify-content: center; gap: 10px;">
                                     <button class='btn btn-warning' title="Edit" onclick="editMenu(<?= esc($value['id_makanan']); ?>)">

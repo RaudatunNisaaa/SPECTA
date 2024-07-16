@@ -26,21 +26,6 @@ class Makanan extends BaseController
         echo view('menu', $data);
     }
 
-    // public function menu()
-    // {
-    //     $makananModel = new MakananModel();
-    //     $makanan = $makananModel->findAll();
-    //     $data['makanan'] = count($makanan);
-
-    //     $pesananModel = new PesananModel();
-    //     $pesanan = $pesananModel->findAll();
-    //     // var_dump('aa');exit;
-    //     $data['pesanan'] = count($pesanan);
-
-    //     // var_dump($jumlahMakanan);exit;
-    //     return view('index', $data);
-    // }
-
     public function detailmenu($id_jenis)
     {
         $dataKategori = $this->kategoriModel->findAll;
@@ -95,48 +80,59 @@ class Makanan extends BaseController
     }
 
     public function tambahDataMenu()
-    {
-        $makanan = $this->request->getPost('makanan');
-        $harga = $this->request->getPost('harga');
-        $foto = $this->request->getPost('foto');
-        $id_jenis = $this->request->getPost('id_jenis');
+{
+    $makanan = $this->request->getPost('makanan');
+    $harga = $this->request->getPost('harga');
+    $id_jenis = $this->request->getPost('id_jenis');
 
-        $rules = [
-            'makanan' => 'required',
-            'harga' => 'required|numeric',
+    $rules = [
+        'makanan' => 'required',
+        'harga' => 'required|numeric',
+        'foto' => 'uploaded[foto]|max_size[foto,2048]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+    ];
+
+    $errors = [
+        'harga' => [
+            'numeric' => 'Harga harus berupa angka.'
+        ],
+        'foto' => [
+            'uploaded' => 'Foto harus diunggah.',
+            'max_size' => 'Ukuran foto maksimal 2MB.',
+            'is_image' => 'File yang diunggah harus berupa gambar.',
+            'mime_in' => 'File yang diunggah harus berupa jpg, jpeg, atau png.',
+        ]
+    ];
+
+    if (!$this->validate($rules, $errors)) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'errors' => $this->validator->getErrors()
+        ]);
+    } else {
+        $fileFoto = $this->request->getFile('foto');
+
+        // Generate a unique name for the file
+        $namaFoto = $fileFoto->getRandomName();
+
+        // Move the file to the img directory with the unique name
+        $fileFoto->move('img', $namaFoto);
+
+        $data = [
+            'id_jenis' => $id_jenis,
+            'makanan' => $makanan,
+            'harga' => $harga,
+            'foto' => $namaFoto
         ];
 
-        $errors = [
-            'harga' => [
-                'numeric' => 'Harga harus berupa angka.'
-            ]
-        ];
+        $this->makananModel->insert($data);
 
-        if (!$this->validate($rules, $errors)) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'errors' => $this->validator->getErrors()
-            ]);
-        } else {
-
-            $fileFoto = $this->request->getFile('foto');
-            $fileFoto->move('img');
-            $namaFoto = $fileFoto->getName();
-            $data = [
-                'id_jenis' => $id_jenis,
-                'makanan' => $makanan,
-                'harga' => $harga,
-                'foto' => $namaFoto
-            ];
-
-            $this->makananModel->insert($data);
-
-            return $this->response->setJSON([
-                'status' => 'success',
-                'id_jenis' => $id_jenis
-            ]);
-        }
+        return $this->response->setJSON([
+            'status' => 'success',
+            'id_jenis' => $id_jenis
+        ]);
     }
+}
+
 
     public function hapusMenu($id_makanan)
     {
