@@ -25,7 +25,7 @@ class MakananModel extends Model
             return $this->join('jenismakanan','jenismakanan.id_jenis=makanan.id_jenis')->findAll();
         }
 
-        return $this->join('jenismakanan','jenismakanan.id_jenis=makanan.id_jenis')->where(['makanan.id_jenis' => $id_jenis])->findAll();
+        return $this->where(['makanan.id_jenis' => $id_jenis])->findAll();
     }
 }
 ?>

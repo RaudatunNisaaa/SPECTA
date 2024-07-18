@@ -55,28 +55,30 @@ class Akun extends BaseController
 
     public function hapusAkun($id_akun)
     {
+        // var_dump($id_akun);exit;
         $this->akunModel->delete($id_akun);
-        return $this->response->setJSON(['status' => 'success']);
+        return redirect()->to('/akun');
+        // return $this->response->setJSON(['status' => 'success']);
     }
 
     public function editAkun($id_akun)
     {
-        $input = $this->request->getJSON();
-
-        if (!isset($input->username) || !isset($input->password) || !isset($input->level)) {
-            return $this->respond(['status' => 'error', 'message' => 'Data tidak valid'], 400);
-        }
-
+       
+        // Data yang akan diupdate
         $data = [
-            'username' => $input->username,
-            'password' => $input->password,
-            'level' => $input->level
+            'username' => $this->request->getPost('username'),
+            'password' => $this->request->getPost('password'),
+            'level' => $this->request->getPost('level')
         ];
+        // var_dump($data);exit;
+        // var_dump($data);exit;
 
-        if ($this->akunModel->update($id_akun, $data)) {
-            return $this->respond(['status' => 'success']);
-        } else {
-            return $this->respond(['status' => 'error', 'message' => 'Gagal mengubah akun'], 500);
-        }
+        // Panggil model AkunModel
+        $akunModel = new \App\Models\AkunModel();
+        $akunModel->update($id_akun, $data);
+        return redirect()->to('/akun');
+        // Lakukan update data
+       
     }
+    
 }

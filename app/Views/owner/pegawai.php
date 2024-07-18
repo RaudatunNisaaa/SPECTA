@@ -56,9 +56,9 @@
                                             <td><?= $a['tugas']; ?></td>
                                             <td>
                                                 <div style="display: flex; justify-content: center; gap: 10px;">
-                                                    <button class="btn btn-warning" title="Edit" onclick="editPegawai(<?= esc($a['id_pegawai']); ?>)">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
+                                                <button class="btn btn-warning" title="Edit" data-toggle="modal" data-target="#editAkunModal<?php echo $a['id_pegawai']?>">
+    <i class="fas fa-edit"></i> Edit
+</button>
                                                     <button class="btn btn-danger" title="Hapus" onclick="hapusPegawai(<?= esc($a['id_pegawai']); ?>)">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
@@ -149,92 +149,62 @@
                 });
             }
         });
-    }
-
-    function editPegawai(id_pegawai) {
-        Swal.fire({
-            title: 'Edit Data Pegawai',
-            html: `
-            <form id="editPegawaiForm" enctype="multipart/form-data">
-                <div class="mb-3" style="text-align: left;">
+    
+    }    
+</script>
+<?php
+foreach ($pegawai as $a) {
+?>
+<div class="modal fade" id="editAkunModal<?php echo $a['id_pegawai'] ?>" tabindex="-1" role="dialog" aria-labelledby="editAkunModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAkunModalLabel">Edit Data Pegawai</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editAkunForm" action="/Pegawai/editPegawai/<?php echo $a['id_pegawai'] ?>" enctype="multipart/form-data" method="POST">
+            <div class="modal-body">
+            <div class="mb-3" style="text-align: left;">
                     <label for="edit_nama_pegawai" class="form-label">Nama Pegawai</label>
-                    <input type="text" id="edit_nama_pegawai" class="form-control" placeholder="">
+                    <input type="text" id="edit_nama_pegawai" name="nama_pegawai" value="<?php echo $a['nama_pegawai'] ?>" class="form-control" placeholder="">
                 </div>
                 <div class="mb-3" style="text-align: left;">
                     <label for="edit_jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                    <select id="edit_jenis_kelamin" class="form-control">
+                    <select id="edit_jenis_kelamin" name="jenis_kelamin" class="form-control">
                         <option value="laki-laki">Laki-laki</option>
                         <option value="perempuan">Perempuan</option>
                     </select>
                 </div>
                 <div class="mb-3" style="text-align: left;">
                     <label for="edit_phone" class="form-label">No. HP</label>
-                    <input type="text" id="edit_phone" class="form-control" placeholder="">
+                    <input type="text" id="edit_phone" name="phone" value="<?php echo $a['phone'] ?>" class="form-control" placeholder="">
                 </div>
                 <div class="mb-3" style="text-align: left;">
                     <label for="edit_alamat" class="form-label">Alamat</label>
-                    <input type="text" id="edit_alamat" class="form-control" placeholder="">
+                    <input type="text" id="edit_alamat" name="alamat" value="<?php echo $a['alamat'] ?>" class="form-control" placeholder="">
                 </div>
-                <div class="mb-3" style="text-align: left;">
-                    <label for="edit_tugas" class="form-label">Tugas</label>
-                    <select id="edit_tugas" class="form-control">
-                        <option value="memasak">Memasak</option>
-                        <option value="mengantar">Mengantar</option>
-                        <option value="packing">Packing</option>
+                    <div class="mb-3">
+                        <label for="edit_level" class="form-label">Tugas</label>
+                      
+                        <select id="edit_tugas" name="tugas" class="form-control">
+                        <option <?php echo $a['tugas']=='memasak'?'selected':'' ?> value="memasak">Memasak</option>
+                        <option <?php echo $a['tugas']=='mengantar'?'selected':'' ?> value="mengantar">Mengantar</option>
+                        <option <?php echo $a['tugas']=='packing'?'selected':'' ?> value="packing">Packing</option>
                     </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary"">Simpan</button>
                 </div>
             </form>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Simpan',
-            cancelButtonText: 'Batal',
-            confirmButtonColor: '#3085d6',
-            preConfirm: () => {
-                const form = Swal.getPopup().querySelector('#editPegawaiForm');
-                const formData = new FormData(form);
+        </div>
+    </div>
+</div>
 
-                const nama_pegawai = formData.get('edit_nama_pegawai');
-                const jenis_kelamin = formData.get('edit_jenis_kelamin');
-                const phone = formData.get('edit_phone');
-                const alamat = formData.get('edit_alamat');
-                const tugas = formData.get('edit_tugas');
-                
-
-                if (!nama_pegawai || !jenis_kelamin || !phone || !alamat || !tugas) {
-                    Swal.showValidationMessage('Tidak boleh ada kolom yang kosong. Silakan isi semua kolom.');
-                    return false;
-                }
-                return formData;
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`/Pegawai/editPegawai/${id_pegawai}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(result.value)
-                })
-                .then(() => {
-                    Swal.fire({
-                        text: 'Data pegawai berhasil diubah!',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire(
-                        'Gagal!',
-                        'Data pegawai gagal diubah.',
-                        'error'
-                    );
-                });
-            }
-        });
-    }    
-</script>
+<?php } ?>
 
 </body>
 </html>

@@ -23,13 +23,13 @@ $routes->get('/dasboard', 'Home::owner'); //dashboard untuk owner
 $routes->get('/akun', 'Akun::index');
 $routes->get('/akun/tambah', 'Akun::tambah');
 $routes->post('/akun/simpan', 'Akun::simpan');
-$routes->delete('/akun/hapusAkun/(:num)', 'Akun::hapusAkun/$1');
-$routes->put('/akun/editAkun/(:num)', 'Akun::editAkun/$1');
+$routes->get('/akun/hapusAkun/(:num)', 'Akun::hapusAkun/$1');
+$routes->post('/akun/editAkun/(:num)', 'Akun::editAkun/$1');
 
 $routes->get('/pegawai', 'Pegawai::index');
 $routes->get('/pegawai/tambah', 'Pegawai::tambahpegawai');
 $routes->delete('/Pegawai/hapusPegawai/(:num)', 'Pegawai::hapusPegawai/$1');
-$routes->put('/Pegawai/editPegawai/(:num)', 'Pegawai::editPegawai/$1');
+$routes->post('/Pegawai/editPegawai/(:num)', 'Pegawai::editPegawai/$1');
 $routes->post('/pegawai/simpanPegawai', 'Pegawai::simpanPegawai');
 
 $routes->get('/datapesanan', 'Pesanan::datapesanan');

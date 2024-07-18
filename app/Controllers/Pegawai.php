@@ -62,30 +62,33 @@ class Pegawai extends BaseController
         return $this->response->setJSON(['status' => 'success']);
     }
 
-    public function editPegawai($id_pegawai)
-    {
-            $nama_pegawai = $this->request->getPost('nama_pegawai');
-            $jenis_kelamin = $this->request->getPost('jenis_kelamin');
-            $phone = $this->request->getPost('phone');
-            $alamat = $this->request->getPost('alamat');
-            $tugas = $this->request->getPost('tugas');
+   public function editPegawai($id_pegawai)
+{
+    // Mengambil data dari permintaan POST
+    $nama_pegawai = $this->request->getVar('nama_pegawai');
+    $jenis_kelamin = $this->request->getVar('jenis_kelamin');
+    $phone = $this->request->getVar('phone');
+    $alamat = $this->request->getVar('alamat');
+    $tugas = $this->request->getVar('tugas');
 
-        $data = [
-            'nama_pegawai' => $nama_pegawai,
-            'jenis_kelamin' => $jenis_kelamin,
-            'phone' => $phone,
-            'alamat' => $alamat,
-            'tugas' => $tugas
-        ];
-// var_dump($data);exit;
-        $model = new PegawaiModel();
-        $result = $model->update($id_pegawai, $data);
+    // Membuat array data untuk disimpan
+    $data = [
+        'nama_pegawai' => $nama_pegawai,
+        'jenis_kelamin' => $jenis_kelamin,
+        'phone' => $phone,
+        'alamat' => $alamat,
+        'tugas' => $tugas
+    ];
 
-        if ($result) {
-            return $this->response->setJSON(['success' => true]);
-        } else {
-            return $this->response->setJSON(['success' => false]);
-        }
-    }
+    // Memanggil model PegawaiModel
+    $model = new PegawaiModel();
+    
+    // Memanggil fungsi update pada model untuk menyimpan data
+    $result = $model->update($id_pegawai, $data);
+    return redirect()->to('/pegawai');
+    // Memeriksa apakah update berhasil
+  
+}
+
 
 }
